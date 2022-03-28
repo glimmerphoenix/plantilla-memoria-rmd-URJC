@@ -1,4 +1,4 @@
-# Plantilla para memoria de proyecto URJC
+# Plantilla para memoria de proyecto URJC con R Markdown
 
 Este proyecto de RStudio proporciona una plantilla para crear una memoria de TFG o TFM de la URJC, usando [R Makdown](https://rmarkdown.rstudio.com/) y [LaTeX](https://es.wikipedia.org/wiki/LaTeX). La misma plantilla puede ser fácilmente adaptada para la redacción y publicación de una tesis doctoral en URJC.
 
