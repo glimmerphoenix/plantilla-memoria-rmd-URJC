@@ -19,20 +19,24 @@ Puedes consultar información adicional en estos enlaces:
   * [bookdown: Authoring Books and Technical Documents with R Markdown](https://bookdown.org/yihui/bookdown/).
 
 ### Requisitos software previos
-Si quieres compilar la memoria utilizando esta plantilla en tu propio sistema, necesitas tener primero instalados los programas
-necesarios.
+En el directorio [`/fonts`](./fonts) encontrarás los archivos de tipografías necesarias para instalarlas en tu equipo, en caso de que aún no las tengas.
+
+Si quieres compilar la memoria utilizando esta plantilla en tu propio sistema, necesitas tener primero instalados los programas necesarios.
+
 * Una **distribución completa de LaTeX**, por ejemplo [Tex Live](https://www.tug.org/texlive/acquire-netinstall.html). Si usas
   Linux, busca en el gestor de paquetes de tu distribución los paquetes que necesitas instalar.
 * La plantilla incorpora el [**paquete `minted`**](https://ctan.org/pkg/minted), para resaltado de sintaxis de fragmentos de código. Para que funcione, debes tener instalado Python, junto con el paquete [Pygments](https://pypi.org/project/Pygments/).
 * Además, recuerda que cualquier fuente tipográfica que quieras utilizar en el documento debe ser una fuente OpenType o TrueType
-  compatible y estar previamente instalada en tu sistema, para que se pueda insertar en el documento. Las fuentes se pueden configurar fácilmente en las opciones del preámbulo del archivo `index.Rmd`. Inicialmente, las fuentes usadas son:
+  compatible y estar previamente instalada en tu sistema, para que se pueda insertar en el documento. Las fuentes se pueden configurar fácilmente en las opciones del preámbulo del archivo `index.Rmd`. 
+  
+  Inicialmente, las fuentes usadas son:
     - mainfont: "TeX Gyre Pagella" [Descarga](https://www.1001fonts.com/tex-gyre-pagella-font.html);
     - sansfont: "Lato", de [Google Fonts](https://fonts.google.com/specimen/Lato);
     - monofont: "Source Code Pro", de [Google Fonts](https://fonts.google.com/specimen/Source+Code+Pro);
     - mathfont: "TeX Gyre Pagella Math" [Descarga, licencia](http://www.gust.org.pl/projects/e-foundry/tg-math/download/index_html#Pagella_Math);
     - fuente para títulos: "Montserrat", de [Google Fonts](https://fonts.google.com/specimen/Montserrat).
 
-Todas estas fuentes están disponibles públicamente, con licencia libre. En el directorio `/fonts` encontrarás también los archivos necesarios para facilitarte su instalación en tu equipo, en caso de que aún no las tengas.
+Todas estas fuentes están disponibles públicamente, con licencia libre. 
 
 ### Compilación de la memoria PDF
 
