@@ -6,6 +6,10 @@ La base es una [plantilla para proyectos URJC con XeLaTeX](https://github.com/gl
 
 La principal ventaja que ofrece esta versión es que te permite trabajar directamente en R/RStudio para realizar, simultáneamente, la parte técnica de tu proyecto y la redacción de la memoria. Con eso se ahorra mucho tiempo y se evita duplicar esfuerzos (por ejemplo, guardando gráficas o resultados para incorporarlos al documento de la memoria, formatearlos, etc.). Mediante esta plantilla, todo el proceso queda automatizado a través de las funciones de R Markdown y el [paquete bookdown](https://pkgs.rstudio.com/bookdown/), entre otros. Esto también es posible gracias a [Pandoc](https://pandoc.org/), el conversor universal de documentos, que se encarga de todo el trabajo pesado de traducción del contenido Markdown a PDF.
 
+## Ejemplo de memoria
+
+Aquí tienes un ejemplo de como queda el [documento de la memoria](_book/bookdown-template.pdf).
+
 ## Instrucciones de uso
 Lo más sencillo es hacer un *fork* de este repositorio para obtener tu propia copia, sobre la que ya podrás trabajar directamente. Es
 conveniente que renombres el repositorio de tu copia con un identificador apropiado, por ejemplo `TFG-NombreApellidos` o 
