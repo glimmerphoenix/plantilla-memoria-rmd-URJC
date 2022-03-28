@@ -1,0 +1,20 @@
+bookdown::pdf_book:
+  template: bookdown-koma.tex
+  #includes:
+  #  in_header: preamble.tex
+  latex_engine: xelatex
+  citation_package: biblatex # natbib is other option
+  fig_caption: yes
+  fig_height: 3.8
+  fig_width: 6.3
+  pandoc_args: [
+    #"--top-level-division=chapter,"
+    "--pdf-engine-opt=--shell-escape"
+  ]
+  keep_tex: yes
+bookdown::bs4_book:
+  css: bs4_style.css
+  theme:
+    primary: "#096B72"
+  repo: https://github.com/rstudio/bookdown-demo
+bookdown::epub_book: default

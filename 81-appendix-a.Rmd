@@ -1,0 +1,16 @@
+<!-- APPENDICES -->
+<!-- \appendix -->
+# (APPENDIX) Appendix {-} 
+
+# First appendix
+
+\dictum[Sherlock Holmes.]{Data, data, data... I can't make bricks without clay.}
+\bigskip
+
+## First section
+
+\kant[15-20]
+
+## Second section
+
+\kant[30-40]

@@ -1,0 +1,141 @@
+---
+# -----------------------
+# General config
+# -----------------------
+title: "Título del proyecto"
+subtitle: "Subtítulo del proyecto"
+author: "John Doe"
+director: "Dr. José Felipe Ortega Soto"
+date: "`r Sys.Date()`"
+year: "2022"
+degree: "GRADO EN INGENIERÍA _____"
+academic-course: "2021/2022"
+doc-type: "Trabajo Fin de Grado"
+subject: "Report subject metadata"
+keywords: ['key1', 'key2', 'key3']
+school: "ETSIT"
+university: "Universidad Rey Juan Carlos"
+country: "Spain"
+# -----------------------
+# Doc class, KOMA config options
+# -----------------------
+site: bookdown::bookdown_site
+documentclass: scrbook
+classoption: [
+  twoside,                # Two-side layout
+  openright,              # Always start chapter on even page
+  #titlepage,              # Include title page
+  parskip=half+,          # Inter-paragraph spacing (half[+-] | full[+-])
+  numbers=noenddot,       # Remove end dot in headers numbering
+  #chapterprefix=true,		# Include prefix for chapter headings
+	#appendixprefix=true,		# Include prefix for appendix headings
+	headinclude=true,       # Include page header
+	footinclude=true,       # Include page footer
+	cleardoublepage=empty,  # Empty page to fill double-page layout
+	BCOR=5mm, 				      # Set binding correction if necessary
+	#DIV=calc    			      # Calc. grid divisions for optimal page layout
+	#mpinclude=true,			  # width = textwidth
+	usegeometry=true			  # Let typearea translate layout changes to geometry
+  ]
+geometry: "verbose"       # Must also set usegeometry=true above
+debug_geometry: no        # If 'yes' shows geometry frames
+bibliography: [book.bib, packages.bib]
+lang: "es-ES"             # Examples: "en" | "en-US" | "en-UK"
+# -----------------------
+# Typography
+# -----------------------
+mainfont: "TeX Gyre Pagella"
+mainfontoptions: "Scale=0.96"
+sansfont: "Lato"
+sansfontoptions: "Scale=0.9"
+monofont: "Source Code Pro"
+monofontoptions: "Scale=0.9"
+mathspec: yes
+mathfont: "TeX Gyre Pagella Math"
+mathfontoptions: "Scale=0.96"
+fontfamilies:
+  - name: \headerfont
+    font: Montserrat
+    options:
+      - Scale=MatchUppercase
+  - name: \partfont
+    font: Montserrat
+  - name: \chapterfont
+    font: Montserrat
+  - name: \sectionfont
+    font: Montserrat-SemiBold
+  - name: \subsectionfont
+    font: Montserrat-Medium
+  - name: \subsubsectionfont
+    font: Montserrat-Medium
+# -----------------------
+# Links
+# -----------------------
+verbatim_in_note: yes
+colorlinks: yes
+linkcolor: "Firebrick4"
+citecolor: "Aquamarine4"
+urlcolor: "RoyalBlue3"
+# -----------------------
+# Frontmatter
+# -----------------------
+toc: yes
+lot: yes
+lof: yes
+lolists: yes
+# url: your book url like https://bookdown.org/yihui/bookdown
+# cover-image: path to the social sharing image like images/cover.jpg
+description: |
+  This is a minimal example of using the bookdown package to write a book.
+  The HTML output format for this example is bookdown::bs4_book,
+  set in the _output.yml file.
+# -----------------------
+# Bibliography
+# -----------------------
+biblio-style: apalike
+csl: chicago-fullnote-bibliography.csl
+---
+
+# Preface {-}
+
+This is a _sample_ book written in **Markdown**. You can use anything that Pandoc's Markdown supports; for example, a math equation $a^2 + b^2 = c^2$.
+
+## Usage {-}
+
+Each **bookdown** chapter is an .Rmd file, and each .Rmd file can contain one (and only one) chapter. A chapter *must* start with a first-level heading: `# A good chapter`, and can contain one (and only one) first-level heading.
+
+Use second-level and higher headings within chapters like: `## A short section` or `### An even shorter section`.
+
+The `index.Rmd` file is required, and is also your first book chapter. It will be the homepage when you render the book.
+
+## Render book {-}
+
+You can render the HTML version of this example book without changing anything:
+
+1. Find the **Build** pane in the RStudio IDE, and
+
+1. Click on **Build Book**, then select your output format, or select "All formats" if you'd like to use multiple formats from the same book source files.
+
+Or build the book from the R console:
+
+```{r, eval=FALSE}
+bookdown::render_book()
+```
+
+To render this example to PDF as a `bookdown::pdf_book`, you'll need to install XeLaTeX. You are recommended to install TinyTeX (which includes XeLaTeX): <https://yihui.org/tinytex/>.
+
+## Preview book {-}
+
+As you work, you may start a local server to live preview this HTML book. This preview will update as you edit the book when you save individual .Rmd files. You can start the server in a work session by using the RStudio add-in "Preview book", or from the R console:
+
+```{r eval=FALSE}
+bookdown::serve_book()
+```
+
+
+```{r include=FALSE}
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(), 'bookdown', 'knitr', 'rmarkdown'
+), 'packages.bib')
+```

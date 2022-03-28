@@ -1,0 +1,828 @@
+% This is a LaTeX template using KOMA-Script 'scrreprt' class.
+% combined with Rmarkdown
+% This template was produced by Felipe Ortega, from previous work by
+% Rob Hyndman ('monashthesis.tex' in 'monash' package)
+% Updated: 11 January 2022
+
+% WARNING: Standard class 'book' and Pandoc options are still used. 
+% Future versions will integrate 'scrreprt'.
+
+%% Plantilla de memoria en LaTeX para TFG/TFM - Universidad Rey Juan Carlos
+%%
+%% Por Gregorio Robles <grex arroba gsyc.urjc.es>
+%%     Felipe Ortega   <felipe.ortega@urjc.es>
+%%     Grupo de Sistemas y Comunicaciones (GSyC)
+%%     Escuela Técnica Superior de Ingenieros de Telecomunicación
+%%     Universidad Rey Juan Carlos
+%%
+%% (Muchas ideas tomadas de Internet, colegas del GSyC, antiguos alumnos...
+%%  etc. Muchas gracias a todos)
+%%
+%% La última versión de esta plantilla está siempre disponible en:
+%%     https://github.com/glimmerphoenix/plantilla-memoria
+%%
+%% - Ejecución en sistema local:
+%% Para obtener el documento en PDF, ejecuta en la shell:
+%%   make
+%%
+%% A diferencia de la anterior versión, que usaba la herramienta pdfLaTeX 
+%% para compilar el documento, esta nueva versión de la plantilla usa
+%% XeLaTeX. Es un compilador más moderno que, entre otras mejoras, incluye
+%% soporte nativo para caracteres con codificación UTF-8, traducción políglota
+%% de referencias (usando Biblatex) y soporte para fuentes OTF. Esta última
+%% característic permite, por ejemplo, insertar iconos de la colección 
+%% Fontawesome en el texto.
+%%
+%% XeLaTeX viene ya incluido en todas las distribuciones modernas de LaTeX.
+%%
+%% - Esta edición ha sido especialmente adaptada para funcionar como plantilla
+%%   Pandoc para R Markdown, bookdown y R/R Studio.
+%%
+%% - Nota: las imágenes deben ir en PNG, JPG, EPS o PDF. También se pueden usar
+%% imágenes en otros formatos con algunos cambios en el preámbulo del documento.
+
+% \documentclass[
+% 	a4paper,11pt,
+% 	% Replace twoside with oneside if you are printing your article on a single side
+% 	% of the paper, or for viewing on screen.
+% 	%oneside,
+% 	twoside,
+% 	openright,
+% 	titlepage,
+% 	numbers=noenddot,			  % Remove end dot in headers numbering
+% 	%chapterprefix=true,		% Include prefix for chapter headings
+% 	%appendixprefix=true,		% Include prefix for appendix headings
+% 	headinclude=true,
+% 	footinclude=true,
+% 	cleardoublepage=empty,
+% 	BCOR=5mm, 				      % Set binding correction if necessary
+% 	%DIV=calc    			      % Calc. grid divisions for optimal page layout
+% 	%mpinclude=true,			  % width = textwidth
+% 	usegeometry=true			  % Let typearea translate layout changes to geometry
+% 	]{scrreprt}
+
+\documentclass[$if(fontsize)$$fontsize$$else$11pt$endif$,$if(lang)$$babel-lang$,$endif$a4paper,$for(classoption)$$classoption$$sep$,$endfor$]{$documentclass$}
+
+%%--------------------------------------
+% KOMA CLASSES
+%%--------------------------------------
+%
+% The class "scrartcl" is one of the so-called KOMA-classes, a set of
+% very well done LaTeX-classes that produce a very European layout
+% (e.g. titles with a sans-serif font).
+% 
+% The KOMA classes have extensive documentation that you can access
+% via the commands:
+%   texdoc scrguide # in German
+%   texdoc scrguien # in English
+%   
+%
+% The available classes are:
+%
+% scrartcl - for "articles", typically for up to ~20 pages, the
+%            highest level sectioning command is \section
+%
+% scrreprt - for "reports", typically for up to ~200 pages, the
+%            highest level sectioning command is \chapter
+%
+% scrbook  - for "books", for more than 200 pages, the highest level
+%            sectioning command is \part.
+%
+% USEFUL OPTIONS
+%
+% a4paper  - Use a4 paper instead of the default american letter
+%            format.
+%
+% 11pt, 12pt, 10pt 
+%          - Use a font with the given size.
+%
+% bibtotoc - Add the bibliography to the table of contents
+%
+% The KOMA-script classes have plenty of options to modify
+
+%%--------------------------------------------------------------------
+
+$if(fontfamily)$                    % Default font family and options
+\usepackage[$for(fontfamilyoptions)$$fontfamilyoptions$$sep$,$endfor$]{$fontfamily$}
+$else$
+\usepackage{lmodern}
+$endif$
+
+% Page layout and linespread
+
+% Line and page breaking
+\sloppy
+\clubpenalty = 10000
+\widowpenalty = 10000
+\brokenpenalty = 10000
+
+% At least +5% extra linespread for Palatino-like font
+\linespread{1.07}
+%\KOMAoptions{DIV=last}
+% Descomentar para ajustar interlineado entre párrafos a una línea en blanco
+%%\setlength{\parskip}{\baselineskip}1\normalsize
+\usepackage{ragged2e}				% Enhanced ragged commands
+
+% Load colour palettes
+% Need to pass correct options for booktabs to load the package
+\PassOptionsToPackage{usenames,dvipsnames,x11names,table}{xcolor}
+\usepackage{xcolor}
+
+%------------------------------------------------------------------------------
+% Geometry
+%------------------------------------------------------------------------------
+
+$if(geometry)$    % User-specified custom geometry
+\usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
+
+$else$            % Classic Thesis geometry, wide side margin
+\usepackage{geometry}
+\geometry{a4paper, centering, text={16cm,25cm}}
+$endif$
+
+
+% Default page layout with generous side margin
+\RequirePackage{typearea}
+% Layout for Palatino font from Classic Thesis
+\areaset[current]{320pt}{732pt} % ~ 336 * factor 2 + 33 head + 42 \the\footskip 
+% \areaset{336pt}{761pt} % 686 (factor 2.2) + 33 head + 42 head \the\footskip 10pt     
+\setlength{\marginparwidth}{10em}%
+\setlength{\marginparsep}{2em}%
+
+% Margin notes layout
+\usepackage{sidenotes}
+% Customize sidenotes font size --> \footnotesize
+% https://tex.stackexchange.com/questions/361622/changing-sidenote-size
+\makeatletter
+\RenewDocumentCommand\sidenotetext{ o o +m }{%      
+	\IfNoValueOrEmptyTF{#1}{%
+		\@sidenotes@placemarginal{#2}{\footnotesize\textsuperscript{\thesidenote}{}~\footnotesize#3}%
+		\refstepcounter{sidenote}%
+	}{%
+		\@sidenotes@placemarginal{#2}{\textsuperscript{#1}~#3}%
+	}%
+}
+\makeatother
+
+% More floats
+\extrafloats{100}
+
+% Landscape pages
+\usepackage{pdflscape}
+
+% FIXME: Debug warnings caused by microtrype protrusion w/ xelatex
+%\usepackage[protrusion=true,final]{microtype} % Improve paragraph aspect
+
+% FIXME: Inspect next config compatibility with XeTeX
+% % use microtype if available
+% \IfFileExists{microtype.sty}{%
+% \usepackage[$for(microtypeoptions)$$microtypeoptions$$sep$,$endfor$]{microtype}
+% \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+% }{}
+
+
+%------------------------------------------------------------------------------
+% Typography, encoding, math
+%------------------------------------------------------------------------------
+
+% Math configuration
+\usepackage[intlimits]{amsmath}     % Provides all mathematical commands
+\usepackage{amssymb}                % Math symbols
+\usepackage{mathtools}              % More math symbols and environments
+
+% Flow control
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+
+% Font encoding and Euro symbol with pdftex
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[$if(fontenc)$$fontenc$$else$T1$endif$]{fontenc}
+  \usepackage[utf8]{inputenc}
+$if(euro)$
+  \usepackage{eurosym}
+$endif$
+
+\else % if luatex or xelatex
+% Math encoding
+$if(mathspec)$
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{unicode-math}
+  \fi
+$else$
+  \usepackage{unicode-math}
+$endif$
+  
+% Edit next line to customize default font options in XeTeX/LuaTeX
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+  
+% Custom font families
+$for(fontfamilies)$
+  \newfontfamily$fontfamilies.name${$fontfamilies.font$}[$fontfamilies.options$]
+$endfor$
+
+% Not required if working with utf-8
+$if(euro)$            % Custom euro symbol command
+  \newcommand{\euro}{€}
+$endif$
+
+$if(mainfont)$        % Main font (serif)
+    \setmainfont[$for(mainfontoptions)$$mainfontoptions$$sep$,$endfor$]{$mainfont$}
+$endif$
+$if(sansfont)$        % Sans serif font
+    \setsansfont[$for(sansfontoptions)$$sansfontoptions$$sep$,$endfor$]{$sansfont$}
+$endif$
+$if(monofont)$        % Monospace font
+    \setmonofont[Mapping=tex-ansi$if(monofontoptions)$,$for(monofontoptions)$$monofontoptions$$sep$,$endfor$$endif$]{$monofont$}
+$endif$
+$if(mathfont)$        % Math font
+$if(mathspec)$        % mathspec config
+  \ifxetex
+    \setmathfont(Digits,Latin,Greek)[$for(mathfontoptions)$$mathfontoptions$$sep$,$endfor$]{$mathfont$}
+  \else
+    \setmathfont[$for(mathfontoptions)$$mathfontoptions$$sep$,$endfor$]{$mathfont$}
+  \fi
+$else$                % unicode-math config
+  \setmathfont[$for(mathfontoptions)$$mathfontoptions$$sep$,$endfor$]{$mathfont$}
+$endif$
+$endif$               % end math font
+$if(CJKmainfont)$     % Chinese, Japanese and Korean fonts
+    \usepackage{xeCJK}
+    \setCJKmainfont[$for(CJKoptions)$$CJKoptions$$sep$,$endfor$]{$CJKmainfont$}
+$endif$
+\fi                   % end luatex or xelatex
+
+% fix the font used for operators and \mathrm
+\DeclareSymbolFont{operators}{\encodingdefault}{\familydefault}{m}{n}
+
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+
+% Special fonts and glyphs
+\usepackage{ccicons}                % Creative Commons icons
+\usepackage{metalogo}               % XeTeX logo
+\usepackage{fontawesome5}           % Fontawesome 5 icons
+\usepackage{adforn}                 % Forns and glyphs
+
+%------------------------------------------------------------------------------
+% Language configuration
+%------------------------------------------------------------------------------
+$if(lang)$
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[shorthands=off,$for(babel-otherlangs)$$babel-otherlangs$,$endfor$main=$babel-lang$]{babel}
+$if(babel-newcommands)$
+  $babel-newcommands$
+$endif$
+\else % if xelatex/luatex
+  \usepackage{polyglossia}
+  \setmainlanguage[$polyglossia-lang.options$]{$polyglossia-lang.name$}
+$for(polyglossia-otherlangs)$
+  \setotherlanguage[$polyglossia-otherlangs.options$]{$polyglossia-otherlangs.name$}
+$endfor$
+  % Custom translations for Spanish in polyglossia
+  % For additional options see polyglossia manual 
+  \gappto\captionsspanish{%
+  	\def\tablename{Tabla}               % Table caption 
+  	\def\listingscaption{Código}%       % Code listing
+  	\def\refname{Referencias}%          % Backmatter bibliography
+  	\def\appendixname{Apéndice}%        % Appendix
+  	\def\listtablename{Índice de tablas}%   % Table index
+  	\def\listoflistingsname{Índice de listas de código}   % Code listings index
+  }
+\fi
+$endif$
+
+% If UK date format is preferred over US format uncomment this line
+% \usepackage[no-weekday]{eukdate}
+
+%------------------------------------------------------------------------------
+% Headings
+%------------------------------------------------------------------------------
+%-- Customize heading style
+%%-- Custom part heading
+\RedeclareSectionCommand[style=part,
+                        beforeskip=0pt,
+                        afterskip=6ex]{part}
+%\renewcommand*\partformat{\partfont\color{GSyCblue}\scshape Parte \thepart\autodot\enskip}	% Skip \partname in part heading
+%-- Configure fonts and colors for all other headings
+\addtokomafont{part}{\centering\partfont\color{GSyCblue}\scshape}
+\addtokomafont{chapter}{\chapterfont\color{GSyCblue}}
+\addtokomafont{section}{\normalfont\sectionfont\color{GSyCblue}}
+\addtokomafont{subsection}{\normalfont\subsectionfont\color{GSyCblue}}
+\addtokomafont{subsubsection}{\normalfont\subsubsectionfont\color{GSyCblue}}
+
+\newcommand\titlerule[1][1pt]{\rule{\textwidth}{#1}}
+\renewcommand\partlineswithprefixformat[3]{%
+	\Ifstr{#2}{}{}{\color{GSyCblue}\titlerule[1.5pt]\vspace{\baselineskip}\par\nobreak}%
+	#2#3\par\nobreak\vspace{\baselineskip}\titlerule[3pt]%
+}
+
+%------------------------------------------------------------------------------
+% Table of content
+%------------------------------------------------------------------------------
+
+% Adjust indentation in ToC (KOMA-Script)
+
+% \RedeclareSectionCommands[tocdynnumwidth]{chapter,section,subsection}
+\RedeclareSectionCommand[
+	tocnumwidth+=-6pt
+]{part}
+
+% Set space between chapter entry and rest of chapter contents
+\DeclareTOCStyleEntries[
+onstarthigherlevel= \vspace{0.5\baselineskip},
+%onstartlowerlevel= \vspace{\baselineskip}
+]{default}{section} % <- Higher level in report and book is chapter
+
+% Prepend 'partname' to part entry in ToC
+\DeclareTOCStyleEntry[
+entrynumberformat=\entrynumberwithprefix{\partname},
+dynnumwidth
+]{tocline}{part}
+\newcommand\entrynumberwithprefix[2]{#1\enspace#2\hfill}
+
+%------------------------------------------------------------------------------
+%% BIBLIOGRAPHY
+%% FIXME: CHANGE TO USE PANDOC CONFIG OPTIONS IN YAML _output.yml HEADER
+%------------------------------------------------------------------------------
+\usepackage[%
+  style=authoryear-comp,
+  backend=biber,
+  natbib=true]{biblatex}
+\ExecuteBibliographyOptions{%
+  bibencoding=utf8,minnames=1,maxnames=8,maxbibnames=99,dashed=false,
+  terseinits=true,giveninits=true,uniquename=false,uniquelist=false,url=true}
+  
+% packages.bib is automatically created in last chunk of index.Rmd
+\bibliography{$for(bibliography)$$bibliography$$sep$, $endfor$}
+
+\DeclareFieldFormat{url}{\mkbibacro{URL}\addcolon\nobreakspace\url{#1}}
+
+%------------------------------------------------------------------------------
+% Load defs for RMarkdown to work
+\usepackage{rmarkdown}
+%------------------------------------------------------------------------------
+% Engineering content
+% Type units with correct spacing and font style
+% Usage \(\unit[100]{m}\) or \(\unitfrac[100]{m}{s}\)
+\usepackage[ugly]{units}
+
+%------------------------------------------------------------------------------
+% Math environments
+\newtheorem{theorem}{Theorem}
+
+%------------------------------------------------------------------------------
+% Blindtext
+% Opciones pangram, bible, random (defecto)
+\usepackage[pangram]{blindtext}
+% Lorem ipsum
+\usepackage{lipsum}
+\usepackage{kantlipsum}
+%------------------------------------------------------------------------------
+
+%------------------------------------------------------------------------------
+% Graphics and tables configuration and customization
+%------------------------------------------------------------------------------
+%%-- Tables
+% Nice rules for tables. Usage \begin{tabular}\toprule ... \midrule ... \bottomrule
+\usepackage{booktabs}           % Already loads package xcolor, also required by Rmd
+\usepackage{longtable}          % Required by R Markdown
+\usepackage{multicol}           % Multiple column layout facilities
+\usepackage{colortbl}           % For coloured tables
+\usepackage{array}              % Alignment
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+
+%%-- Graphs and colors
+\usepackage{subfig}             % Subfigures
+\usepackage{pgf}
+\usepackage{graphicx}           % allow embedded images
+	\setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
+	\graphicspath{{img/}}         % set of paths to search for images
+
+% \definecolor{RoyalBlue3}{RGB}{58,95,205}
+% \definecolor{Firebrick4}{RGB}{139,26,26}
+% \definecolor{Aquamarine4}{RGB}{69,139,116}
+
+%%-- Customized GSyC colours (taken from logo)
+\definecolor{GSyCblue}{RGB}{18,46,116} % Dark blue from GSyC logo (top part of fonts)
+\definecolor{GSyClightblue}{RGB}{74,146,212} % Light blue from GSyC logo (low part of "y")
+  
+%------------------------------------------------------------------------------
+% Miscelaneous config
+%------------------------------------------------------------------------------
+
+% Trick to place margin figures in correct page
+\usepackage{mparhack}
+% \usepackage{marginfix}		% Explore this package to fix probs. with marginotes
+
+\usepackage{setspace}
+
+% Set lists (itemize, enumerate) with customized icons
+% easy restart of number sequence in enumerate
+% http://ctan.org/pkg/enumitem
+\usepackage[shortlabels]{enumitem}
+
+\newcommand{\usageitem}[1]{%
+	\item[%
+	{\makebox[2em]{\strut\color{GSyCblue} #1}}%
+	]
+}
+
+%------------------------------------------------------------------------------
+%%-- Colored boxes and floats
+%------------------------------------------------------------------------------
+% Colored boxes for information corners
+\usepackage{tcolorbox}% http://ctan.org/pkg/tcolorbox
+
+% Caja azul con título para información, explicaciones extra y detalles
+% Icons: \faInfoCircle \faBook \faBookmark
+\newtcolorbox{mybluebox}[1]{colback=darkblue!5!white,colframe=darkblue!75!black,
+	fonttitle=\normalfont,title=#1}
+
+% Caja verde para comentarios adicionales
+% Icons: \faComment \faCrosshairs
+\newtcolorbox{mygreenbox}[1]{colback=darkgreen!5!white,colframe=darkgreen!75!black,
+	fonttitle=\normalfont,title=#1}
+
+% TODO: Yellow box with title for warnings
+
+% Caja roja con título para posibles problemas explicaciones extra y detalles
+% Icons: \faExclamationCircle \faBomb
+\newtcolorbox{myredbox}[1]{colback=darkred!5!white,colframe=darkred!75!black,
+	fonttitle=\normalfont,title=#1}
+
+% Coloured equations
+\usepackage{empheq}
+
+%%--------------------------------------------------------------------
+% Syntax highlighting
+
+% Syntax highlighting with minted
+% Option: count minted listings by chapter
+\usepackage[chapter]{minted}
+\definecolor{bg-minted}{rgb}{0.98,0.98,0.98}
+% For lang. specific options, set a particular lang inside []
+\setminted[]{%
+  bgcolor=bg-minted,
+  frame=lines, fontsize=\footnotesize,
+  breaklines, breakautoindent=false,
+  breaksymbolleft=\raisebox{0.8ex}{
+  \small\reflectbox{\carriagereturn}},
+  breaksymbolindentleft=0pt,
+  breaksymbolsepleft=0pt,
+  breaksymbolright=\small\carriagereturn,
+  breaksymbolindentright=0pt,
+  breaksymbolsepright=0pt
+}
+% Prevents error command \checkmark already defined
+% See: https://tex.stackexchange.com/a/73705
+\usepackage{savesym}
+\savesymbol{checkmark} 
+\usepackage{dingbat}   % Carraige return key for code line breaks
+
+% Add here custom short commands to colour inline code
+
+% Source code listings
+\usepackage{listings}           
+% Source Code Listings. Usage: \begin{lstlisting}...\end{lstlisting}
+\lstloadlanguages{r,python}       % Default highlighting set to "python"
+
+\usepackage{csquotes} % For translations with biblatex
+
+%% -- Citations and quotes
+\usepackage{epigraph}
+
+%------------------------------------------------------------------------------
+% Add any LaTeX packages and other preamble here if required
+%------------------------------------------------------------------------------
+\author{$author$}
+\title{$title$}
+\date{$date$}
+% \degrees{$degrees$}
+% \def\degreetitle{$degreetype$}
+% Add subject and keywords below
+
+%------------------------------------------------------------------------------
+% Links and URLs
+%------------------------------------------------------------------------------
+\PassOptionsToPackage{hyphens}{url} % url is loaded by hyperref
+$if(verbatim-in-note)$
+%\usepackage{fancyvrb}           % extended verbatim environments
+	\fvset{fontsize=\normalsize}    % default font size for fancy-verbatim environments
+$endif$
+\usepackage[unicode=true]{hyperref}
+% FIXME: TO BE DELETED, OPTIONS LOADED BY DEAFULT
+% $if(colorlinks)$
+% \PassOptionsToPackage{usenames,dvipsnames}{color} % color is loaded by hyperref
+$endif$
+
+%------------------------------------------------------------------------------
+% Doc metadata
+%------------------------------------------------------------------------------
+\hypersetup{
+            pdftoolbar=true,    %Shows Adobe Acrobat toolbar
+            pdfmenubar=true,    %Shows Adobe Acrobat menu
+$if(title-meta)$
+            pdftitle={$title-meta$},
+$else$
+            pdftitle={$title$},
+$endif$
+$if(author-meta)$
+            pdfauthor={$author-meta$},
+$else$
+            pdfauthor={$author$},
+$endif$
+            pdfproducer={Bookdown with LaTeX},
+$if(subject)$
+            pdfsubject={$subject$},
+$endif$
+$if(keywords)$
+            pdfkeywords={$for(keywords)$$keywords$$sep$, $endfor$},
+$endif$
+            pdfnewwindow=true,  %links open in new window
+$if(colorlinks)$
+            colorlinks=true,    %false: boxed links; true: coloured links
+            linkcolor=$if(linkcolor)$$linkcolor$$else$Maroon$endif$,
+            citecolor=$if(citecolor)$$citecolor$$else$Blue$endif$,
+            urlcolor=$if(urlcolor)$$urlcolor$$else$Blue$endif$,
+$else$
+            pdfborder={0 0 0},
+$endif$
+            breaklinks=true,    % Break links between lines
+            linktocpage=true    % Links on ToC page number, not on section titles
+            }
+
+\urlstyle{same}  % don't use monospace font for urls
+$if(verbatim-in-note)$
+\VerbatimFootnotes % allows verbatim text in footnotes
+$endif$
+
+%------------------------------------------------------------------------------
+% Additional headers
+%------------------------------------------------------------------------------
+$for(header-includes)$
+$header-includes$
+$endfor$
+
+%%--------------------------------------------------------------------
+
+%------------------------------------------------------------------------------
+%------------------------------------------------------------------------------
+
+\begin{document}
+
+% Set standard geometry (no wide margin) in frontmatter
+\newgeometry{margin=1in}
+
+%------------------------------------------------------------------------------
+% Title page
+%------------------------------------------------------------------------------
+
+%%-- Title page
+
+% \titlehead{IST - GITT \hfill Curso 2020/2021}
+% \title{Template for a nice \LaTeX{} document}
+% \subtitle{This is the subtitle}
+% \subject{Ingeniería de Sistemas Telemáticos (GITT)}
+% %\author{Olaf Lenz (Affiliation)\\
+% %        Another author (Affiliation)\\}
+% \date{\today}
+% \publishers{GSyC -- ETSIT}
+% 
+% \maketitle
+
+\begin{titlepage}
+\begin{center}
+\begin{tabular}[c]{c c}
+%\includegraphics[bb=0 0 194 352, scale=0.25]{logo} &
+\includegraphics[width=9.5cm]{img/logoURJC.png}
+%&
+%\begin{tabular}[b]{l}
+%\Huge
+%\textsf{UNIVERSIDAD} \\
+%\Huge
+%\textsf{REY JUAN CARLOS} \\
+%\end{tabular}
+\\
+\end{tabular}
+
+\vspace{3cm}
+
+\Large 
+$degree$
+
+\vspace{0.4cm}
+
+\large
+Curso Académico $academic-course$
+
+\vspace{0.8cm}
+
+$doc-type$
+
+\vspace{2cm}
+
+\LARGE \MakeUppercase{$title$}\par
+\Large $subtitle$
+\vspace{3cm}
+
+\large
+Autor: \space $author$ \\
+Tutor: \space $director$
+\end{center}
+\end{titlepage}
+
+\titlepage
+
+%\clearpage
+\mbox{}
+\thispagestyle{empty} % para que no se numere esta pagina
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% quote
+%\clearpage
+
+\epigraph{``Jamás el esfuerzo desayuda a la fortuna "}{\textup{Fernando de Rojas}}
+
+
+\thispagestyle{empty}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Para firmar
+\pagenumbering{gobble}
+\chapter*{}
+
+\vspace{-4cm}
+\begin{center}
+\LARGE
+\textbf{$doc-type$}
+
+\vspace{1cm}
+\large
+$title$
+
+\vspace{1cm}
+\large
+\textbf{Autor}: \space $author$  \\
+\textbf{Tutor}: \space $director$
+
+\end{center}
+
+\vspace{1cm}
+La defensa del presente $doc-type$ se realizó el día \qquad\(\;\,\) de
+\qquad\qquad\qquad\qquad \newline de $year$, siendo calificada por el siguiente tribunal:
+
+
+\vspace{0.5cm}
+\textbf{Presidente:}
+
+\vspace{0.8cm}
+\textbf{Secretario:}
+
+\vspace{0.8cm}
+\textbf{Vocal:}
+
+
+\vspace{0.8cm}
+y habiendo obtenido la siguiente calificación:
+
+\vspace{0.8cm}
+\textbf{Calificación:}
+
+
+\vspace{0.8cm}
+\begin{flushright}
+Móstoles/Fuenlabrada, a \qquad\(\;\,\) de \qquad\qquad\qquad\qquad de $year$
+\end{flushright}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Dedicatoria
+
+\chapter*{}
+%\pagenumbering{Roman} % para comenzar la numeración de paginas en numeros romanos
+\begin{flushright}
+\textit{Una dedicatoria corta.}
+\end{flushright}
+
+\cleardoublepage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Agradecimientos
+
+\chapter*{Agradecimientos}
+%\addcontentsline{toc}{chapter}{Agradecimientos} % si queremos que aparezca en el índice
+\markboth{AGRADECIMIENTOS}{AGRADECIMIENTOS} % encabezado
+
+Incluye aquí los agradecimientos.
+
+\cleardoublepage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Resumen
+
+\chapter*{Resumen}
+%\addcontentsline{toc}{chapter}{Resumen} % si queremos que aparezca en el índice
+\markboth{RESUMEN}{RESUMEN} % encabezado
+
+En esta sección hay que escribir el resumen de la memoria en español.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Resumen en inglés
+
+\chapter*{Summary}
+%\addcontentsline{toc}{chapter}{Summary} % si queremos que aparezca en el índice
+\markboth{SUMMARY}{SUMMARY} % encabezado
+
+Here goes the English summary of this work.
+
+
+%%%%--------------------------------------------------------------------
+
+%%%---------------------------------------------- 
+
+%------------------------------------------------------------------------------
+%%-- Copyright page
+
+% % v.4 copyright page
+% \newpage
+% \pagestyle{empty}
+% ~\vfill
+% \par\noindent\includegraphics[width=0.2\textwidth]{cc-by-sa.eps}
+% \smallskip
+% 
+% \par\noindent \textcopyright~2021 $author$. Some rights reserved.
+% \medskip
+% 
+% \par\noindent {\scshape Published by \textit{Publisher name}}
+% 
+% \par\noindent {\url{https://www.somefancysite.org}
+% \medskip
+% 
+% \par\noindent  This work is released under a Creative Commons\\
+% \texttt{Attribution-Share-Alike (by-sa)} license, v4.0. To obtain the\\
+%  complete license text visit:\\
+% \url{https://creativecommons.org/licenses/by-sa/4.0/deed.es}.
+% \bigskip
+% 	
+% \par\noindent \textit{First printing, \today}
+% 	
+% \cleardoublepage
+
+% Recover wide margin layout from this point
+\restoregeometry
+
+$for(include-before)$
+$include-before$
+
+$endfor$
+
+%------------------------------------------------------------------------------
+%%-- Frontmatter
+\frontmatter    % Roman numbering
+%%-- Table of Contents
+$if(toc)$
+{%
+\setcounter{tocdepth}{$toc-depth$}
+\tableofcontents
+}
+$endif$
+%%-- List of Figures
+$if(lof)$
+\listoffigures
+$endif$
+%%-- List of Tables
+$if(lot)$
+\listoftables
+$endif$
+%%-- List of listings
+$if(lolists)$
+\listoflistings
+$endif$
+
+%------------------------------------------------------------------------------
+%%-- Mainmatter
+%\mainmatter     % Roman numbering
+%%-- Body
+$body$
+
+%------------------------------------------------------------------------------
+%%-- Backmatter
+\backmatter      % Unnumbered secs: glossary, bibliography, indexes
+
+%------------------------------------------------------------------------------
+%%-- Bibliography
+\printbibliography[heading=bibintoc]
+
+$for(include-after)$
+$include-after$
+
+$endfor$
+\end{document}
