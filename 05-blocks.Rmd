@@ -88,8 +88,10 @@ rem.insert_model(model, "rain_australia", True, "classification", scores,\
 server_model = rem.get_model("rain_australia", public_key)
 \end{minted}
 \caption{Código para el caso de ejemplo del modelo de clasifiación de lluvia en Australia.}
-\label{listing:1}
+\label{lst:listing1}
 \end{listing}
+
+Este ejemplo es una referencia al listado de código \ref{lst:listing1}.
 
 ## Tables
 
