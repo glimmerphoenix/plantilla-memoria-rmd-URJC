@@ -38,7 +38,8 @@ classoption: [
 	usegeometry=true			  # Let typearea translate layout changes to geometry
   ]
 geometry: "verbose"       # Must also set usegeometry=true above
-debug_geometry: no        # If 'yes' shows geometry frames
+geometry-wide-side: true  # Wide side column for marginal notes
+geometry-debug: no        # If 'yes' shows geometry frames
 bibliography: [book.bib, packages.bib]
 lang: "es-ES"             # Examples: "en" | "en-US" | "en-UK"
 # -----------------------

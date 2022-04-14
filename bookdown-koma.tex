@@ -132,22 +132,27 @@ $endif$
 % Geometry
 %------------------------------------------------------------------------------
 
+% Standard geometry options in LaTeX Pandoc template
 $if(geometry)$    % User-specified custom geometry
 \usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
-
-$else$            % Classic Thesis geometry, wide side margin
-\usepackage{geometry}
-\geometry{a4paper, centering, text={16cm,25cm}}
+$else$            
+% Classic Thesis geometry, wide side margin
+%\usepackage{geometry}
+%\geometry{a4paper, centering, text={16cm,25cm}}
 $endif$
 
-
-% Default page layout with generous side margin
+$if(geometry-wide-side)$
+% KOMA-Script package to define page layout
 \RequirePackage{typearea}
-% Layout for Palatino font from Classic Thesis
+% Layout from Classic Thesis, which uses Palatino (similar to TeX Gyre Pagella)
+% Default page layout with generous side margin
 \areaset[current]{320pt}{732pt} % ~ 336 * factor 2 + 33 head + 42 \the\footskip 
 % \areaset{336pt}{761pt} % 686 (factor 2.2) + 33 head + 42 head \the\footskip 10pt     
 \setlength{\marginparwidth}{10em}%
 \setlength{\marginparsep}{2em}%
+$else$
+% FIXME: Standard page layout
+$endif$
 
 % Margin notes layout
 \usepackage{sidenotes}
@@ -170,8 +175,9 @@ $endif$
 % Landscape pages
 \usepackage{pdflscape}
 
-% FIXME: Debug warnings caused by microtrype protrusion w/ xelatex
-%\usepackage[protrusion=true,final]{microtype} % Improve paragraph aspect
+% INFO: 'final' option is now deprecated in microtype package
+% 'protrusion' is only supported option in XeLaTeX
+\usepackage[protrusion=true]{microtype} % Improve paragraph aspect
 
 % FIXME: Inspect next config compatibility with XeTeX
 % % use microtype if available
@@ -542,6 +548,10 @@ dynnumwidth
 %------------------------------------------------------------------------------
 % Add any LaTeX packages and other preamble here if required
 %------------------------------------------------------------------------------
+
+%------------------------------------------------------------------------------
+% Document metadata
+%------------------------------------------------------------------------------
 \author{$author$}
 \title{$title$}
 \date{$date$}
@@ -564,7 +574,7 @@ $endif$
 $endif$
 
 %------------------------------------------------------------------------------
-% Doc metadata
+% Hyperref package setup
 %------------------------------------------------------------------------------
 \hypersetup{
             pdftoolbar=true,    %Shows Adobe Acrobat toolbar
