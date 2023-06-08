@@ -42,6 +42,11 @@ geometry-wide-side: true  # Wide side column for marginal notes
 geometry-debug: no        # If 'yes' shows geometry frames
 bibliography: [book.bib, packages.bib]
 lang: "es-ES"             # Examples: "en" | "en-US" | "en-UK"
+
+polyglossia-lang:
+  name: "spanish"
+  options: 
+    variant=spanish
 # -----------------------
 # Typography
 # -----------------------
@@ -97,37 +102,88 @@ biblio-style: apalike
 csl: chicago-fullnote-bibliography.csl
 ---
 
-# Preface {-}
+# Prefacio {-}
 
-This is a _sample_ book written in **Markdown**. You can use anything that Pandoc's Markdown supports; for example, a math equation $a^2 + b^2 = c^2$.
+Este proyecto ofrece una plantilla para escribir la memoria de un TFG o TFM con 
+el formato solicitado por la ETSIT de la URJC. El formato es también compatible
+con las memorias para la ETSIT y puede ser compatible (quizá con mínimos cambios)
+con otras escuelas y facultades (ESCET, FCS, etc.).
 
-## Usage {-}
+El proyecto nace para ofrecer soporte a la redacción de documentos científicos,
+utilizando [**R Markdown**](https://rmarkdown.rstudio.com/), que permite integrar
+contenido formateado en *Markdown* con código ejecutable en lenguaje R.
 
-Each **bookdown** chapter is an .Rmd file, and each .Rmd file can contain one (and only one) chapter. A chapter *must* start with a first-level heading: `# A good chapter`, and can contain one (and only one) first-level heading.
+Este es un libro de _ejemplo_, creado mediante los paquetes [`rmarkdown`](https://pkgs.rstudio.com/rmarkdown/) y
+[`bookdown`](https://pkgs.rstudio.com/bookdown/). A su vez, el contenido generado
+en formato Markdown se pasa a la herramienta [Pandoc](https://pandoc.org/), un
+traductor universal de documentos. Por tanto, el contenido puede incluir cualquier
+elemento soportado por Pandoc, como una expresión matemática \(a^2 + b^2 = c^2\).
 
-Use second-level and higher headings within chapters like: `## A short section` or `### An even shorter section`.
+La gran ventaja de usar estas herramienta es que todos los resultados numéricos
+y gráficos de nuestro código R se podrán insertar automáticamente en nuestro
+documento, evitando la tediosa tarea de copiar y pegar los resultados, o actualizarlos
+en caso de que ejecutemos una nueva versión.
 
-The `index.Rmd` file is required, and is also your first book chapter. It will be the homepage when you render the book.
+## Utilización {-}
 
-## Render book {-}
+Cada capítulo **bookdown** en un archivo .Rmd, que contiene un (y solo un) capítulo.
+Es **obligatorio** que cada capítulo comienze por un encabezado de primer nivel en
+Markdown: `# Título de un capítulo`, y que contenta un (y solo un) encabezado de
+este nivel.
 
-You can render the HTML version of this example book without changing anything:
+Se pueden usar el segundo nivel y los siguientes niveles de encabezado dentro de los
+capítulo, como: `## Título de sección` o `### Título de subsección`. Como en cualquier
+otro documento, no se recomienda usar encabezados más allá del tercer nivel, salvo
+en casos muy justificados. Jamás se debería usar encabezados más allá del cuarto nivel.
 
-1. Find the **Build** pane in the RStudio IDE, and
+Es un requisito obligatorio que exista un archivo `index.Rmd`, que contiene (como
+en este ejemplo) el primer capítulo del libro. Fíjate que, en este ejemplo, se ha
+elegido que sea un prefacio no numerado. Se puede conseguir un encabezado no numerado
+de cualquier nivel agregando tras el título del encabezado y espacio en blanco, seguido
+del código `{-}`. En el caso de que la salida sea un documento HTML, este capítulo
+será la página de inicio (*home*) del proyecto.
 
-1. Click on **Build Book**, then select your output format, or select "All formats" if you'd like to use multiple formats from the same book source files.
+## Representación del libro {-}
 
-Or build the book from the R console:
+Otra de las grandes ventajas de usar R Markdown y Pandoc es que el mismo formato
+de documento se puede representar en tres posibles formatos de salida diferentes.
+
+### Formato HTML {-}
+
+Genera páginas web, normalmente con una barra lateral para navegar por los capítulos.
+Se puede generar la versión HTML de un documento R Markdown sin cambiar nada.
+
+1. Enccuentra en la IDE RStudio el panel **Build** (normalmente, en el panel del
+cuadrante superior derecho).
+
+2. Pulsa en el triángulo negro del botón **Build Book** (con el icono de un martillo),
+para desplegar una lista de formatos y elegir el que quieres construir, o selecciona
+"All formats" para crear un libro en múltiples formatos de salida con los mismos
+ficheros de entrada.
+
+También se puede representar el libro desde la consola R:
 
 ```{r, eval=FALSE}
 bookdown::render_book()
 ```
 
-To render this example to PDF as a `bookdown::pdf_book`, you'll need to install XeLaTeX. You are recommended to install TinyTeX (which includes XeLaTeX): <https://yihui.org/tinytex/>.
+### Formato PDF {-}
 
-## Preview book {-}
+Para construir un documento PDF a partir de este libro, se necesita seleccionar el formato
+de salida `bookdown::pdf_book`. En este caso, necesitas tener instalada previante una
+distribución de **LaTeX**, un sistema de composición tipográfica, que incluye herramientas
+para generar este tipo de salida, como [pdfTeX](https://es.wikipedia.org/wiki/PdfTeX) o
+[XeTeX](https://es.wikipedia.org/wiki/XeTeX). 
 
-As you work, you may start a local server to live preview this HTML book. This preview will update as you edit the book when you save individual .Rmd files. You can start the server in a work session by using the RStudio add-in "Preview book", or from the R console:
+Se recomienda instalar TinyTeX (que incluye XeTeX): <https://yihui.org/tinytex/>.
+
+## Previsualización del libro {-}
+
+Conforme trabajas, se puede ejecutar un servidor local para previsualizar el resultado
+del libro en formato HTML. Esta previsualización se actualizará conforme se edita el
+libro, cuando guardas cada archivo individual .Rmd. Puedes arrancar el servidor en una
+sesión de trabajo usando el add-in "Preview book" de RStudio, o bien desde la línea
+de comandos:
 
 ```{r eval=FALSE}
 bookdown::serve_book()
